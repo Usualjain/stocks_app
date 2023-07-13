@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+// import 'package:sizer/sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LineChartWidget extends StatelessWidget {
   final Map<String, dynamic> data;
@@ -28,7 +29,7 @@ class LineChartWidget extends StatelessWidget {
     }
     return Container(
       // Set the desired height
-      padding: EdgeInsets.all(1.h),
+      padding: EdgeInsets.all(10.h),
       child: LineChart(
         LineChartData(
           lineTouchData: LineTouchData(
@@ -37,10 +38,10 @@ class LineChartWidget extends StatelessWidget {
                 tooltipBgColor: Colors.transparent,
                 getTooltipItems: (touchedSpots){
                   return touchedSpots.map((LineBarSpot touchedSpot) {
-                    const TextStyle textStyle = TextStyle(
+                    TextStyle textStyle = TextStyle(
                       color: Colors.white, // Set the color of the tooltip text
                       fontWeight: FontWeight.bold,
-                      fontSize: 14.0,
+                      fontSize: 14.sp,
                     );
                     return LineTooltipItem(
                       '${touchedSpot.y}',
@@ -84,12 +85,22 @@ class LineChartWidget extends StatelessWidget {
             )),
             leftTitles: AxisTitles(sideTitles:
               SideTitles(showTitles: true,
-                reservedSize: 10.w,
+                reservedSize: 35.w,
                 interval: (data.length/6).round().toDouble(),
                 getTitlesWidget: (value, meta) {
                 if((prevValue - value).abs() >  ((intervalValues[1] - intervalValues[0])/6).round()){
                   prevValue = value;
-                  return SizedBox(child: Text(value.round().toString(),overflow: TextOverflow.visible, style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),));
+                  String printVal;
+                  if (value.round() > 99999 ){
+                    printVal = '${(value/1000).round()}k';
+                  }
+                  else if (value.round() > 9999 ){
+                    printVal = '${(value/1000).toStringAsFixed(1)}k';
+                  }
+                  else{
+                    printVal = value.round().toString();
+                  }
+                  return Center(child: Text(printVal,overflow: TextOverflow.visible, style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold, fontSize: 15.sp),));
                 }
                 return const SizedBox(height: 0,width: 0,);
                 },

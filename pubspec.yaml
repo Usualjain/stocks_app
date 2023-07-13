@@ -47,6 +47,8 @@ dependencies:
   html: ^0.15.4
   webview_flutter: ^4.2.2
   fl_chart: ^0.62.0
+  flutter_screenutil: ^5.7.0
+  flutter_keyboard_visibility: ^5.4.1
 
 
 dev_dependencies:

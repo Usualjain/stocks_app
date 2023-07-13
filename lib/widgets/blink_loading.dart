@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+// import 'package:sizer/sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 // loaderOn(BuildContext context) {
@@ -50,7 +51,7 @@ class _BlinkLoadingState extends State<BlinkLoading> with SingleTickerProviderSt
           color: Colors.black,
           child: FadeTransition(
             opacity: _animationController,
-            child: Icon(Icons.currency_rupee_sharp, color: Colors.green.shade800,size: 6.h,)
+            child: Icon(Icons.currency_rupee_sharp, color: Colors.green.shade800,size: 60.h,)
       ),
         )
     );

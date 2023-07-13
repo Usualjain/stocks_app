@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:stocks_app/widgets/signin_signup.dart';
-import 'package:sizer/sizer.dart';
+// import 'package:sizer/sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PhoneVerifyScreen extends StatefulWidget{
 
@@ -29,9 +30,8 @@ class _PhoneVerifyScreenState extends State<PhoneVerifyScreen> {
   otpSendingMethod(){
     auth.verifyPhoneNumber(
       phoneNumber: '+91 ${widget.phoneNumber}',
-      verificationCompleted: (PhoneAuthCredential credential) async{
-        await auth.signInWithCredential(credential);
-        Navigator.of(context).pop(true);
+      verificationCompleted: (PhoneAuthCredential credential){
+        auth.signInWithCredential(credential).then((value) =>  Navigator.of(context).pop(true));
       },
       verificationFailed: (FirebaseAuthException e) {},
       codeSent: (String verificationId, int? resendToken) {
@@ -49,7 +49,7 @@ class _PhoneVerifyScreenState extends State<PhoneVerifyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Verify', style: TextStyle(fontSize: 18.sp)),
+          title: Text('Verify', style: TextStyle(fontSize: 22.sp)),
           backgroundColor: Colors.black87,
         ),
         body: Container(
@@ -64,23 +64,23 @@ class _PhoneVerifyScreenState extends State<PhoneVerifyScreen> {
                 children: [
                   Container(
                     width: double.infinity.w,
-                    padding: EdgeInsets.only(left: 0.22.h),
+                    padding: EdgeInsets.only(left: 5.h),
                     child: Text(
                         'Verification Code',
                         textAlign: TextAlign.left,
-                        style: TextStyle(color: Colors.white, fontSize: 26.25.sp, fontWeight: FontWeight.bold)
+                        style: TextStyle(color: Colors.white, fontSize: 35.sp, fontWeight: FontWeight.bold)
                     ),
                   ),
 
-                  SizedBox(height: 1.68.h,),
+                  SizedBox(height: 16.h,),
 
                   Container(
                     width: double.infinity.w,
-                    padding: EdgeInsets.only(left: 3.37.h),
+                    padding: EdgeInsets.only(left: 33.h),
                     child: Text(
                         'We texted you a code\nPlease enter it below',
                         textAlign: TextAlign.left,
-                        style: TextStyle(color: Colors.white, fontSize: 15.sp,)
+                        style: TextStyle(color: Colors.white, fontSize: 22.sp,)
                     ),
                   ),
                 ],
@@ -110,27 +110,25 @@ class _PhoneVerifyScreenState extends State<PhoneVerifyScreen> {
                 children: [
                   Text(
                       'This helps us verify every user in our market place',
-                      style: TextStyle(color: Colors.white, fontSize: 11.25.sp, )
+                      style: TextStyle(color: Colors.white, fontSize: 18.sp, )
                   ),
-
+                  SizedBox(height: 45.h,),
                   TextButton(
                     onPressed: (){},
                     child: Text(
                         "Didn't get code?",
-                        style: TextStyle(color: Colors.white, fontSize: 11.25.sp, )
+                        style: TextStyle(color: Colors.white, fontSize: 17.sp, )
                     ),
                   ),
-                  SizedBox(height: 4.5.h,),
-                  signInSignUpButton('Verify', ()async{
+                  SizedBox(height: 20.h,),
+                  signInSignUpButton('Verify', (){
                     try {
-                      print(finalCode);
                       PhoneAuthCredential credential =
                       PhoneAuthProvider.credential(
                         verificationId: PhoneVerifyScreen.verify,
                         smsCode: finalCode,
                       );
-                      await auth.signInWithCredential(credential);
-                      Navigator.of(context).pop(true);
+                      auth.signInWithCredential(credential).then((value) => Navigator.of(context).pop(true));
                     }catch(e){
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()),));
                     }

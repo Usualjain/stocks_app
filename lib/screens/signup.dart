@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_app/screens/phone_verify.dart';
 import 'package:stocks_app/widgets/signin_signup.dart';
-import 'package:sizer/sizer.dart';
+// import 'package:sizer/sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SignUpScreen extends StatefulWidget{
   const SignUpScreen({super.key,});
@@ -36,7 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       controller: _phoneNumberTextController,
       maxLength: 10,
       cursorColor: Colors.white,
-      style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 15.sp),
+      style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 20.sp),
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.phone , color: Colors.white,),
           prefixText: '+91 ' ,
@@ -60,19 +61,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
             }
           },
             style: TextButton.styleFrom(
-              padding: EdgeInsets.only(right: 1.12.h),
+              padding: EdgeInsets.only(right: 11.h),
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              minimumSize: Size.square(0.22.h),) ,
+              minimumSize: Size.square(2.h),) ,
             child: const Text('Verify', style: TextStyle(color:Colors.white),),
           ),
           prefixStyle: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15.sp),
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22.sp),
           labelText: 'Phone Number',
           labelStyle: TextStyle(
-              color: Colors.white60.withOpacity(0.9), fontSize: 13.5.sp),
+              color: Colors.white60.withOpacity(0.9), fontSize: 20.sp),
           filled: true,
           fillColor: Colors.white.withOpacity(0.1),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(3.37.h),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(33.h),
               borderSide: const BorderSide(width: 0, style: BorderStyle.none))
       ),
       keyboardType:TextInputType.number,
@@ -81,7 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up', style: TextStyle(fontSize: 18.sp)),
+        title: Text('Sign Up', style: TextStyle(fontSize: 22.sp)),
         backgroundColor: Colors.black87,
       ),
       body: Container(
@@ -90,19 +91,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              SizedBox(height:10.12.h, width: double.infinity.w,),
-              SizedBox(width:85.16.w, child: textFieldWidget(context, 'First Name', Icons.person, false, false,_firstNameTextController)),
-              SizedBox(height:2.25.h),
-              SizedBox(width:85.16.w, child: textFieldWidget(context, 'Last Name', Icons.person, false, false, _lastNameTextController)),
-              SizedBox(height:2.25.h),
-              SizedBox(width:85.16.w, child: pno),
-              SizedBox(height:2.25.h),
-              SizedBox(width:85.16.w, child: textFieldWidget(context, 'Email Id', Icons.email, false, false, _emailTextController)),
-              SizedBox(height:2.25.h),
-              SizedBox(width:85.16.w, child: textFieldWidget(context, 'Market Exp In Yrs', Icons.eject_rounded, false, false, _experienceTextController)),
-              SizedBox(height:5.62.h),
+              SizedBox(height:100.h, width: double.infinity.w,),
+              SizedBox(width:360.w, child: textFieldWidget(context, 'First Name', Icons.person, false, false,_firstNameTextController)),
+              SizedBox(height:22.h),
+              SizedBox(width:360.w, child: textFieldWidget(context, 'Last Name', Icons.person, false, false, _lastNameTextController)),
+              SizedBox(height:22.h),
+              SizedBox(width:360.w, child: pno),
+              SizedBox(height:22.h),
+              SizedBox(width:360.w, child: textFieldWidget(context, 'Email Id', Icons.email, false, false, _emailTextController)),
+              SizedBox(height:22.h),
+              SizedBox(width:360.w, child: textFieldWidget(context, 'Market Exp In Yrs', Icons.eject_rounded, false, false, _experienceTextController)),
+              SizedBox(height:56.h),
               SizedBox(
-                width: 73.w,
+                width: 375.w,
                 child: signInSignUpButton('SIGN UP', () {
                   String text="";
                   if(_firstNameTextController.text == ''){
@@ -122,9 +123,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         "lastName":_lastNameTextController.text,
                         "email":_emailTextController.text,
                         "Market Experience":_experienceTextController.text,
-                    });
+                        "WatchLists": <String, List> {'My WatchList': []},
+                    }).then((value) => Navigator.of(context).pop());
                     // FirebaseAuth.instance.signOut();
-                    Navigator.of(context).pop();
+                    // Navigator.of(context).pop();
                   }
                   if(text.isNotEmpty){
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
